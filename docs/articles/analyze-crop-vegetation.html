@@ -105,8 +105,16 @@ results.</p>
 <h3 id="output-structure">Output Structure<a class="anchor" aria-label="anchor" href="#output-structure"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/analyze_crop_vegetation.html">analyze_crop_vegetation</a></span><span class="op">(</span></span>
-<span>  spectral_data <span class="op">=</span> <span class="va">your_data</span>,</span>
+<code class="sourceCode R"><span><span class="va">red</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_sample_data.html">load_sample_data</a></span><span class="op">(</span><span class="st">"sample_red.rds"</span><span class="op">)</span></span>
+<span><span class="va">nir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_sample_data.html">load_sample_data</a></span><span class="op">(</span><span class="st">"sample_nir.rds"</span><span class="op">)</span></span>
+<span><span class="va">blue</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/load_sample_data.html">load_sample_data</a></span><span class="op">(</span><span class="st">"sample_blue.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">spectral_stack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">red</span>, <span class="va">nir</span>, <span class="va">blue</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">spectral_stack</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"nir"</span>, <span class="st">"blue"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/analyze_crop_vegetation.html">analyze_crop_vegetation</a></span><span class="op">(</span></span>
+<span>  spectral_data <span class="op">=</span> <span class="va">spectral_stack</span>,</span>
 <span>  crop_type <span class="op">=</span> <span class="st">"corn"</span>,</span>
 <span>  analysis_type <span class="op">=</span> <span class="st">"comprehensive"</span></span>
 <span><span class="op">)</span></span>

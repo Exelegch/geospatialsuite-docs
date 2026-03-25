@@ -1,8 +1,6 @@
 # Changelog
 
-## geospatialsuite 0.1.1
-
-CRAN release: 2025-11-05
+## geospatialsuite 0.2.0
 
 ### Major Improvements
 

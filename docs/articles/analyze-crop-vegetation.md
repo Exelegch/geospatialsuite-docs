@@ -16,8 +16,16 @@ comprehensive crop analysis results.
 ### Output Structure
 
 ``` r
+red <- load_sample_data("sample_red.rds")
+nir <- load_sample_data("sample_nir.rds")
+blue <- load_sample_data("sample_blue.rds")
+
+spectral_stack <- c(red, nir, blue)
+
+names(spectral_stack) <- c("red", "nir", "blue")
+
 result <- analyze_crop_vegetation(
-  spectral_data = your_data,
+  spectral_data = spectral_stack,
   crop_type = "corn",
   analysis_type = "comprehensive"
 )

@@ -11,6 +11,7 @@ validate_required_bands(
   swir1,
   swir2,
   red_edge,
+  red_edge2,
   coastal,
   nir2,
   verbose = FALSE

@@ -13,6 +13,7 @@ calculate_vegetation_index(
   swir1 = NULL,
   swir2 = NULL,
   red_edge = NULL,
+  red_edge2 = NULL,
   coastal = NULL,
   nir2 = NULL,
   index_type = "NDVI",
@@ -42,7 +43,10 @@ directory path, or list of raster files}
 
 \item{swir2}{Optional SWIR2 band}
 
-\item{red_edge}{Optional Red Edge band}
+\item{red_edge}{Optional Red Edge band (e.g. Sentinel-2 Band 5, ~705 nm)}
+
+\item{red_edge2}{Optional second Red Edge band (e.g. Sentinel-2 Band 6, ~740 nm).
+Required for S2REP index only.}
 
 \item{coastal}{Optional Coastal/Aerosol band}
 
@@ -189,9 +193,9 @@ evi <- calculate_vegetation_index(spectral_data = landsat_stack,
 savi <- calculate_vegetation_index(spectral_data = "/path/to/sentinel/bands/",
                                   index_type = "SAVI", auto_detect_bands = TRUE)
 
-# Advanced index with custom parameters
-pri <- calculate_vegetation_index(red = red_band, nir = nir_band, green = green_band,
-                                 index_type = "PRI", clamp_range = c(-1, 1))
+# S2REP requires two red-edge bands (Sentinel-2 B5 and B6)
+s2rep <- calculate_vegetation_index(spectral_data = sentinel_data,
+                                    index_type = "S2REP", auto_detect_bands = TRUE)
 
 # Custom band names for multi-band data
 ndvi <- calculate_vegetation_index(spectral_data = sentinel_data,

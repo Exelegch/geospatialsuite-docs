@@ -324,7 +324,7 @@ quick_map(huc_sf, variable = "nitrogen_mg_l",
           title = "Nitrogen Levels by Watershed")
 ```
 
-### Agricultural Monitoring Crop CodeS
+### Agricultural Monitoring Crop Codes
 
 ``` r
 # Get crop codes for analysis
@@ -345,6 +345,29 @@ county_data <- data.frame(
 
 # Auto-geocode counties
 county_sf <- auto_geocode_data(county_data, verbose = TRUE)
+```
+
+### Analyse crop vegetation
+
+``` r
+red <- load_sample_data("sample_red.rds")
+nir <- load_sample_data("sample_nir.rds")
+blue <- load_sample_data("sample_blue.rds")
+
+spectral_stack <- c(red, nir, blue)
+
+names(spectral_stack) <- c("red", "nir", "blue")
+
+result <- analyze_crop_vegetation(
+  spectral_data = spectral_stack,
+  crop_type = "corn",
+  analysis_type = "comprehensive"
+)
+
+# Structure:
+result$vegetation_indices      # SpatRaster with calculated indices
+result$analysis_results        # Detailed analysis results
+result$metadata                # Processing metadata
 ```
 
 ## 🌟 What Makes geospatialsuite Special

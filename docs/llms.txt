@@ -39,7 +39,7 @@ research, environmental monitoring, and remote sensing applications.
 
 ## ✨ Key Features
 
-### 🗺️ **Auto-Geocoding Without Coordinates** ⭐ NEW!
+### 🗺️ **Auto-Geocoding Without Coordinates**
 
 - **Work with data that has NO lat/lon!** Automatically geocode using
   geographic identifiers
@@ -103,19 +103,8 @@ install.packages("geospatialsuite")
 ### Development Version from GitHub
 
 ``` r
-# Install development version with latest features (includes auto-geocoding!)
 # install.packages("devtools")
 devtools::install_github("cwru-sdle/geospatialsuite")
-```
-
-### Install Recommended Packages for Best Performance
-
-``` r
-# Enhanced visualization and functionality
-install.packages(c("tidyterra", "RStoolbox", "leaflet", "patchwork"))
-
-# For auto-geocoding features (optional)
-install.packages(c("tigris", "nhdplusTools", "zipcodeR", "tidygeocoder"))
 ```
 
 ## 🚀 Quick Start
@@ -139,14 +128,15 @@ test_function_availability(verbose = TRUE)
 red <- load_sample_data("sample_red.rds")
 nir <- load_sample_data("sample_nir.rds")
 blue <- load_sample_data("sample_blue.rds")
+study_sites <- load_sample_data("sample_coordinates.csv")
 
 # 1. One-line mapping (auto-detects everything!)
-quick_map("mydata.shp")
+quick_map(red, title = "Red Band")
 
-# 2. Universal spatial join (most common operation)
+# 2. Universal spatial join (most common operation- Requires your own data)
 result <- universal_spatial_join(
-  source_data = "study_sites.csv",
-  target_data = "elevation.tif",
+  source_data = study_sites,
+  target_data = red,
   method = "extract"
 )
 
@@ -162,8 +152,7 @@ ndvi <- calculate_vegetation_index(
 enhanced_ndvi <- calculate_ndvi_enhanced(
   red = red,
   nir = nir,
-  quality_filter = TRUE,
-  mask_invalid = TRUE
+  quality_filter = TRUE
 )
 
 # 5. Multiple indices at once
@@ -178,9 +167,9 @@ indices <- calculate_multiple_indices(
 
 ## 🗺️ Auto-Geocoding Without Coordinates
 
-**NEW!** Work with data that doesn’t have latitude/longitude
-coordinates. geospatialsuite automatically detects and geocodes
-geographic identifiers:
+Work with data that doesn’t have latitude/longitude coordinates.
+geospatialsuite automatically detects and geocodes geographic
+identifiers:
 
 ``` r
 # Works with state names or abbreviations
@@ -189,7 +178,7 @@ state_data <- data.frame(
   population = c(11.8, 13.0, 10.1)
 )
 spatial_data <- auto_geocode_data(state_data)
-quick_map(spatial_data, variable = "population")
+
 
 # Works with FIPS codes
 county_data <- data.frame(
@@ -232,7 +221,7 @@ abbreviations) - ✅ Counties - ✅ FIPS codes - ✅ HUC watershed codes
   Package overview and quick start examples
 - [**Analyze Crop
   Vegetation**](https://cran.r-project.org/web/packages/geospatialsuite/vignettes/analyze-crop-vegetation.html) -
-  Using analyze_crop_vegetation() in geospatialsuite ⭐ NEW!
+  Using analyze_crop_vegetation() in geospatialsuite
 - [**Universal Spatial
   Analysis**](https://cran.r-project.org/web/packages/geospatialsuite/vignettes/spatial-analysis.html) -
   Core spatial join capabilities
@@ -255,7 +244,7 @@ abbreviations) - ✅ Counties - ✅ FIPS codes - ✅ HUC watershed codes
 # View all available functions
 help(package = "geospatialsuite")
 
-# New auto-geocoding functions
+# Auto-geocoding functions
 ?auto_geocode_data
 ?preview_geocoding
 
@@ -286,14 +275,6 @@ census_data <- data.frame(
 census_sf <- auto_geocode_data(census_data, verbose = TRUE)
 quick_map(census_sf, variable = "median_income", 
           title = "Median Household Income by State")
-
-# Combine with satellite data
-ndvi_raster <- terra::rast("vegetation_data.tif")
-census_with_ndvi <- universal_spatial_join(
-  source_data = census_sf,
-  target_data = ndvi_raster,
-  method = "extract"
-)
 ```
 
 ### Watershed Analysis with HUC Codes
@@ -326,26 +307,9 @@ quick_map(huc_sf, variable = "nitrogen_mg_l",
           title = "Nitrogen Levels by Watershed")
 ```
 
-### Agricultural Monitoring
+### Agricultural Monitoring Crop Codes
 
 ``` r
-# Comprehensive crop analysis workflow
-crop_analysis <- run_enhanced_ndvi_crop_workflow(
-  config = list(
-    red_data = "satellite/red_bands/",
-    nir_data = "satellite/nir_bands/", 
-    region_boundary = "Iowa",
-    crop_codes = get_comprehensive_cdl_codes("soybeans"),
-    quality_filter = TRUE,
-    temporal_smoothing = TRUE,
-    visualization_config = list(
-      interactive = TRUE,
-      create_maps = TRUE
-    )
-  ),
-  output_folder = "results/"
-)
-
 # Get crop codes for analysis
 corn_codes <- get_comprehensive_cdl_codes("corn")
 grain_codes <- get_comprehensive_cdl_codes("grains")
@@ -364,52 +328,34 @@ county_data <- data.frame(
 
 # Auto-geocode counties
 county_sf <- auto_geocode_data(county_data, verbose = TRUE)
-
-# Multi-dataset environmental integration
-ndvi_data <- terra::rast("vegetation.tif")
-temp_data <- terra::rast("temperature.tif")
-
-# Extract satellite data for each county
-county_analysis <- universal_spatial_join(
-  source_data = county_sf,
-  target_data = ndvi_data,
-  method = "extract",
-  summary_function = "mean"
-)
-
-# Add temperature data
-county_complete <- universal_spatial_join(
-  source_data = county_analysis,
-  target_data = temp_data,
-  method = "extract"
-)
-
-# Visualize
-quick_map(county_complete, variable = "extracted_mean_ndvi",
-          title = "Vegetation Health by County")
 ```
 
-### Remote Sensing Applications
+### Analyse crop vegetation
 
 ``` r
-# Run comprehensive geospatial workflow
-config <- list(
-  analysis_type = "vegetation_comprehensive",
-  input_data = satellite_data,
-  region_boundary = "study_area.shp",
-  indices = c("NDVI", "EVI", "SAVI", "GNDVI"),
-  output_folder = "analysis_results/"
+red <- load_sample_data("sample_red.rds")
+nir <- load_sample_data("sample_nir.rds")
+blue <- load_sample_data("sample_blue.rds")
+
+spectral_stack <- c(red, nir, blue)
+
+names(spectral_stack) <- c("red", "nir", "blue")
+
+result <- analyze_crop_vegetation(
+  spectral_data = spectral_stack,
+  crop_type = "corn",
+  analysis_type = "comprehensive"
 )
 
-results <- run_comprehensive_geospatial_workflow(config)
-
-# Quick visualization of results
-quick_map(results$vegetation_data, title = "Vegetation Analysis Results")
+# Structure:
+result$vegetation_indices      # SpatRaster with calculated indices
+result$analysis_results        # Detailed analysis results
+result$metadata                # Processing metadata
 ```
 
 ## 🌟 What Makes geospatialsuite Special
 
-### 1. **Auto-Geocoding Revolution** ⭐ NEW!
+### 1. **Auto-Geocoding Revolution**
 
 No more manual coordinate lookups! Work directly with: - State names,
 county names, FIPS codes - HUC watershed codes (any format) - ZIP codes,
@@ -488,8 +434,9 @@ For realistic satellite imagery (5K×5K pixels):
 - **7.6× more memory efficient** than ggplot2 (75 MB vs 572 MB)
 - **4.2× faster** execution (684 ms vs 2,897 ms)
 
-See `vignette("performance-benchmark")` for complete benchmarks and
-reproducible code.
+See
+[`vignette("performance_benchmark")`](https://exelegch.github.io/geospatialsuite-docs/articles/performance_benchmark.md)
+for complete benchmarks and reproducible code.
 
 ### Performance Tips
 
@@ -499,17 +446,6 @@ test_package_minimal(verbose = TRUE)
 
 # Check which functions are available
 test_function_availability(verbose = TRUE)
-
-# Preview geocoding before processing large datasets
-preview_geocoding(my_data)
-
-# Use efficient spatial operations
-result <- universal_spatial_join(
-  source_data = "points.csv",
-  target_data = "large_raster.tif",
-  method = "extract",
-  chunk_size = 1000000  # Process in chunks for large data
-)
 ```
 
 ## 📊 Supported Vegetation Indices
@@ -590,50 +526,43 @@ platforms*
 
 ``` r
 # Core dependencies (automatically installed with geospatialsuite)
+# These are listed in DESCRIPTION Imports and will be installed automatically
 terra (>= 1.6-17)
 sf (>= 1.0-0)
 dplyr (>= 1.0.0)
 ggplot2 (>= 3.3.0)
 magrittr
 viridis
+leaflet          # Interactive web mapping
+rnaturalearth    # Natural Earth country boundaries
+tigris           # US Census boundaries (states, counties, FIPS)
+# Plus: graphics, grDevices, htmlwidgets, mice, parallel, 
+#       RColorBrewer, stats, stringr, tools, utils
 ```
 
-### Recommended Packages for Enhanced Functionality
+### Optional Enhancement Packages
 
 ``` r
-# Install these for optimal performance and features
+# These packages provide additional functionality but are not required
+# Install them separately for enhanced capabilities
+
+# Raster visualization enhancements
 install.packages(c(
   "tidyterra",    # Efficient raster visualization with ggplot2
-  "RStoolbox",    # Remote sensing tools and visualization
-  "leaflet",      # Interactive web mapping
-  "patchwork",    # Multi-panel figures and layouts
-  "gganimate",    # Animated visualizations
-  "rnaturalearth", # Natural Earth country boundaries
-  "tigris"        # US administrative boundaries
+  "RStoolbox"     # Remote sensing tools and visualization
 ))
-```
 
-### Optional Packages for Auto-Geocoding
-
-``` r
-# Install these for geocoding features (NEW!)
+# Figure composition and animation
 install.packages(c(
-  "tigris",        # US Census boundaries (states, counties, FIPS)
+  "patchwork",    # Multi-panel figures and layouts
+  "gganimate"     # Animated visualizations
+))
+
+# Extended geocoding capabilities (listed in DESCRIPTION Suggests)
+install.packages(c(
   "nhdplusTools",  # HUC watershed boundaries
   "zipcodeR",      # ZIP code centroids
   "tidygeocoder"   # City name geocoding
-))
-```
-
-### Additional Optional Packages
-
-``` r
-# Additional packages for specialized functions
-install.packages(c(
-  "htmlwidgets", # Interactive widgets
-  "mice",        # Multiple imputation
-  "RColorBrewer", # Color palettes
-  "parallel"     # Parallel processing
 ))
 ```
 
