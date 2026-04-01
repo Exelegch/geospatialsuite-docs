@@ -567,7 +567,7 @@ confident than 0.5)</li>
 <span><span class="co"># Get individual index contributions</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">idx</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">yield</span><span class="op">$</span><span class="va">index_contributions</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">contrib</span> <span class="op">&lt;-</span> <span class="va">yield</span><span class="op">$</span><span class="va">index_contributions</span><span class="op">[[</span><span class="va">idx</span><span class="op">]</span><span class="op">]</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s: %.3f (raw: %.3f Ã‚Â± %.3f)\n"</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s: %.3f (raw: %.3f +/- %.3f)\n"</span>,</span>
 <span>              <span class="va">idx</span>, </span>
 <span>              <span class="va">contrib</span><span class="op">$</span><span class="va">mean_normalized</span>,</span>
 <span>              <span class="va">contrib</span><span class="op">$</span><span class="va">raw_mean</span>,</span>
@@ -649,7 +649,7 @@ calculated indices</p>
 <tr class="even">
 <td><code>histogram</code></td>
 <td>list (optional)</td>
-<td>Histogram data if Ã¢â€°Â¥100 pixels</td>
+<td>Histogram data if &gt;= 100 pixels</td>
 </tr>
 </tbody>
 </table>
@@ -667,7 +667,7 @@ calculated indices</p>
 <span></span>
 <span><span class="co"># NDVI statistics</span></span>
 <span><span class="va">ndvi_stats</span> <span class="op">&lt;-</span> <span class="va">stats</span><span class="op">$</span><span class="va">NDVI</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"NDVI: %.3f Ã‚Â± %.3f (range: %.3f to %.3f)\n"</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"NDVI: %.3f +/- %.3f (range: %.3f to %.3f)\n"</span>,</span>
 <span>            <span class="va">ndvi_stats</span><span class="op">$</span><span class="va">mean</span>,</span>
 <span>            <span class="va">ndvi_stats</span><span class="op">$</span><span class="va">std_dev</span>,</span>
 <span>            <span class="va">ndvi_stats</span><span class="op">$</span><span class="va">min</span>,</span>
@@ -906,24 +906,233 @@ processing information</p>
 </div>
 </div>
 <div class="section level3">
+<h3 id="classification-methodology-and-references">Classification Methodology and References<a class="anchor" aria-label="anchor" href="#classification-methodology-and-references"></a>
+</h3>
+<p><code><a href="../reference/analyze_crop_vegetation.html">analyze_crop_vegetation()</a></code> classifications are based on
+NDVI and other indices. Each analysis component uses a different
+combination of indices, with thresholds grounded in peer-reviewed remote
+sensing literature.</p>
+<div class="section level4">
+<h4 id="stress-detection">Stress Detection<a class="anchor" aria-label="anchor" href="#stress-detection"></a>
+</h4>
+<p>Thresholds are applied independently to each available index, with
+each index using biophysically appropriate breakpoints (Tucker, 1979;
+Hatfield et al., 2008):</p>
+<table class="table">
+<thead><tr class="header">
+<th>Index</th>
+<th>Healthy</th>
+<th>Moderate Stress</th>
+<th>Severe Stress</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>NDVI</td>
+<td>&gt;= 0.60</td>
+<td>0.40 – 0.60</td>
+<td>&lt; 0.40</td>
+</tr>
+<tr class="even">
+<td>EVI</td>
+<td>&gt;= 0.40</td>
+<td>0.20 – 0.40</td>
+<td>&lt; 0.20</td>
+</tr>
+<tr class="odd">
+<td>GNDVI</td>
+<td>&gt;= 0.50</td>
+<td>0.30 – 0.50</td>
+<td>&lt; 0.30</td>
+</tr>
+<tr class="even">
+<td>SIPI</td>
+<td>&gt;= 1.00</td>
+<td>0.80 – 1.00</td>
+<td>&lt; 0.80</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level4">
+<h4 id="growth-stage-classification">Growth Stage Classification<a class="anchor" aria-label="anchor" href="#growth-stage-classification"></a>
+</h4>
+<p>Growth stage is predicted from mean NDVI using crop-specific
+thresholds. Statistics (mean, range, percentiles, CV) are additionally
+reported for EVI, GNDVI, and DVI. The threshold approach is conceptually
+consistent with Anyamba et al. (2021), who applied explicit per-crop
+NDVI cutoffs for large-scale MODIS-based crop monitoring, and with the
+MODIS + CDL crop monitoring framework of Akanbi et al. (2024).</p>
+<p><strong>Corn</strong></p>
+<table class="table">
+<thead><tr class="header">
+<th>Stage</th>
+<th>Mean NDVI</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Emergence</td>
+<td>&lt; 0.30</td>
+</tr>
+<tr class="even">
+<td>Vegetative</td>
+<td>0.30 – 0.60</td>
+</tr>
+<tr class="odd">
+<td>Reproductive</td>
+<td>0.60 – 0.80</td>
+</tr>
+<tr class="even">
+<td>Maturity</td>
+<td>&gt; 0.80</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Soybean</strong></p>
+<table class="table">
+<thead><tr class="header">
+<th>Stage</th>
+<th>Mean NDVI</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Emergence</td>
+<td>&lt; 0.40</td>
+</tr>
+<tr class="even">
+<td>Vegetative</td>
+<td>0.40 – 0.65</td>
+</tr>
+<tr class="odd">
+<td>Reproductive</td>
+<td>0.65 – 0.80</td>
+</tr>
+<tr class="even">
+<td>Maturity</td>
+<td>&gt; 0.80</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Wheat</strong></p>
+<table class="table">
+<thead><tr class="header">
+<th>Stage</th>
+<th>Mean NDVI</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Tillering</td>
+<td>&lt; 0.35</td>
+</tr>
+<tr class="even">
+<td>Stem elongation</td>
+<td>0.35 – 0.70</td>
+</tr>
+<tr class="odd">
+<td>Grain filling</td>
+<td>0.70 – 0.80</td>
+</tr>
+<tr class="even">
+<td>Maturity</td>
+<td>&gt; 0.80</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>These are literature-informed starting points. Exact NDVI boundaries
+vary by cultivar, sensor, region, and season. Calibration with local
+ground truth data is recommended.</p>
+</blockquote>
+</div>
+<div class="section level4">
+<h4 id="yield-potential-composite-index">Yield Potential (Composite Index)<a class="anchor" aria-label="anchor" href="#yield-potential-composite-index"></a>
+</h4>
+<p>Yield potential is assessed using a <strong>composite score</strong>
+that normalizes up to five indices (NDVI, EVI, GNDVI, DVI, RVI) to a 0–1
+scale and averages them, reducing dependence on any single index. This
+multi-index approach is consistent with Bolton &amp; Friedl (2013) and
+Mkhabela et al. (2011).</p>
+<table class="table">
+<thead><tr class="header">
+<th>Composite Score</th>
+<th>Corn / Wheat</th>
+<th>Soybean</th>
+<th>Class</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>&lt; 0.30</td>
+<td>Low</td>
+<td>&lt; 0.35</td>
+<td>Low</td>
+</tr>
+<tr class="even">
+<td>0.30 – 0.60</td>
+<td>Medium</td>
+<td>0.35 – 0.65</td>
+<td>Medium</td>
+</tr>
+<tr class="odd">
+<td>0.60 – 0.80</td>
+<td>High</td>
+<td>0.65 – 0.85</td>
+<td>High</td>
+</tr>
+<tr class="even">
+<td>&gt; 0.80</td>
+<td>Very High</td>
+<td>&gt; 0.85</td>
+<td>Very High</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The composite yield index is a vegetation-based proxy, not a direct
+yield prediction. Correlation with actual harvested yield varies by
+crop, region, year, and management practice.</p>
+</blockquote>
+</div>
+<div class="section level4">
+<h4 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h4>
+<ul>
+<li><p>Tucker, C.J. (1979). Red and photographic infrared linear
+combinations for monitoring vegetation. <em>Remote Sensing of
+Environment</em>, 8(2), 127–150. <a href="https://doi.org/10.1016/0034-4257(79)90013-0" class="external-link uri">https://doi.org/10.1016/0034-4257(79)90013-0</a></p></li>
+<li><p>Hatfield, J.L., Gitelson, A.A., Schepers, J.S. &amp; Walthall,
+C.L. (2008). Application of spectral remote sensing for agronomic
+decisions. <em>Agronomy Journal</em>, 100(S3), S-117–S-131. <a href="https://doi.org/10.2134/agronj2006.0370c" class="external-link uri">https://doi.org/10.2134/agronj2006.0370c</a></p></li>
+<li><p>Anyamba, A. et al. (2021). USA crop yield estimation with MODIS
+NDVI: Impact of the 2012 drought on corn production. <em>Remote
+Sensing</em>, 13(21), 4227. <a href="https://doi.org/10.3390/rs13214227" class="external-link uri">https://doi.org/10.3390/rs13214227</a></p></li>
+<li><p>Akanbi, O.D. et al. (2024). Integrating multiscale geospatial
+analysis for monitoring crop growth, nutrient distribution, and
+hydrological dynamics in large-scale agricultural systems. <em>Journal
+of Geovisualization and Spatial Analysis</em>, 8, 9. <a href="https://doi.org/10.1007/s41651-023-00164-y" class="external-link uri">https://doi.org/10.1007/s41651-023-00164-y</a></p></li>
+<li><p>Bolton, D.K. &amp; Friedl, M.A. (2013). Forecasting crop yield
+using remotely sensed vegetation indices and crop phenology metrics.
+<em>Agricultural and Forest Meteorology</em>, 173, 74–84. <a href="https://doi.org/10.1016/j.agrformet.2013.01.007" class="external-link uri">https://doi.org/10.1016/j.agrformet.2013.01.007</a></p></li>
+<li><p>Mkhabela, M.S. et al. (2011). Crop yield forecasting on the
+Canadian Prairies using MODIS NDVI data. <em>Agricultural and Forest
+Meteorology</em>, 151(3), 385–393. <a href="https://doi.org/10.1016/j.agrformet.2010.11.012" class="external-link uri">https://doi.org/10.1016/j.agrformet.2010.11.012</a></p></li>
+</ul>
+<hr>
+</div>
+</div>
+<div class="section level3">
 <h3 id="validation-notes">Validation Notes<a class="anchor" aria-label="anchor" href="#validation-notes"></a>
 </h3>
 <p><strong>Important Caveats:</strong></p>
 <ol style="list-style-type: decimal">
-<li>
-<strong>Threshold-based</strong>: Stress and yield classifications
-use literature-based thresholds that may need adjustment for your
-specific region/conditions</li>
-<li>
-<strong>Composite Yield Index</strong>: This is a vegetation-based
-proxy, not a direct yield prediction. Correlation with actual yield
-varies by crop, region, and year</li>
-<li>
-<strong>Growth Stage</strong>: Predictions are based on NDVI
-patterns and may not align perfectly with field observations</li>
-<li>
-<strong>No guarantee</strong>: These are analytical tools to support
-decision-making, not definitive assessments</li>
+<li><p><strong>Threshold-based</strong>: Stress and yield
+classifications use literature-based thresholds that may need adjustment
+for your specific region/conditions</p></li>
+<li><p><strong>Composite Yield Index</strong>: This is a
+vegetation-based proxy, not a direct yield prediction. Correlation with
+actual yield varies by crop, region, and year</p></li>
+<li><p><strong>Growth Stage</strong>: Predictions are based on NDVI
+patterns and may not align perfectly with field observations</p></li>
+<li><p>These are analytical tools to support decision-making, not
+definitive assessments</p></li>
 </ol>
 <p><strong>Recommended Validation:</strong></p>
 <ul>

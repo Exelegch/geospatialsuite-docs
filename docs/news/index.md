@@ -4,6 +4,8 @@
 
 ### Major Improvements
 
+- Resolved indices errors and requirements
+
 #### Working Examples and Sample Data
 
 - Added built-in sample datasets (~150KB) to `inst/extdata/`

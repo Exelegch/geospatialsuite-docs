@@ -486,6 +486,27 @@
 <span><span class="va">result</span><span class="op">$</span><span class="va">vegetation_indices</span>      <span class="co"># SpatRaster with calculated indices</span></span>
 <span><span class="va">result</span><span class="op">$</span><span class="va">analysis_results</span>        <span class="co"># Detailed analysis results</span></span>
 <span><span class="va">result</span><span class="op">$</span><span class="va">metadata</span>                <span class="co"># Processing metadata</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="crop-classification-methodology">Crop Classification Methodology<a class="anchor" aria-label="anchor" href="#crop-classification-methodology"></a>
+</h4>
+<p><code><a href="reference/analyze_crop_vegetation.html">analyze_crop_vegetation()</a></code> classifies vegetation stress, growth stage, and yield potential using literature-informed thresholds across multiple indices:</p>
+<ul>
+<li><p><strong>Stress detection</strong> applies independent thresholds to each available index (NDVI, EVI, GNDVI, SIPI). NDVI stress ranges (healthy ≥ 0.6, moderate stress 0.4–0.6, severe stress &lt; 0.4) follow Tucker (1979) and Hatfield et al. (2008). EVI and GNDVI thresholds are similarly derived from Hatfield et al. (2008).</p></li>
+<li><p><strong>Growth stage</strong> is predicted from mean NDVI using crop-specific cutoffs consistent with Anyamba et al. (2021), who applied explicit per-crop NDVI thresholds for large-scale crop monitoring with MODIS and crop mask data — the same conceptual approach used here. The MODIS + CDL crop monitoring framework follows Akanbi et al. (2024).</p></li>
+<li><p><strong>Yield potential</strong> uses a composite score averaging up to five normalized indices (NDVI, EVI, GNDVI, DVI, RVI), consistent with the multi-index approach of Bolton &amp; Friedl (2013) and Mkhabela et al. (2011).</p></li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> Thresholds are literature-informed starting points. Exact NDVI boundaries vary by region, cultivar, sensor, and season. Calibration with local ground truth data is recommended.</p>
+</blockquote>
+<p><strong>References:</strong> - Tucker (1979). <em>Remote Sensing of Environment</em>, 8(2), 127–150. <a href="https://doi.org/10.1016/0034-4257(79)90013-0" class="external-link uri">https://doi.org/10.1016/0034-4257(79)90013-0</a></p>
+<ul>
+<li><p>Hatfield et al. (2008). <em>Agronomy Journal</em>, 100(S3), S-117–S-131. <a href="https://doi.org/10.2134/agronj2006.0370c" class="external-link uri">https://doi.org/10.2134/agronj2006.0370c</a></p></li>
+<li><p>Anyamba et al. (2021). <em>Remote Sensing</em>, 13(21), 4227. <a href="https://doi.org/10.3390/rs13214227" class="external-link uri">https://doi.org/10.3390/rs13214227</a></p></li>
+<li><p>Akanbi et al. (2024). <em>Journal of Geovisualization and Spatial Analysis</em>, 8, 9 <a href="https://doi.org/10.1007/s41651-023-00164-y" class="external-link uri">https://doi.org/10.1007/s41651-023-00164-y</a></p></li>
+<li><p>Bolton &amp; Friedl (2013). <em>Agricultural and Forest Meteorology</em>, 173, 74–84. <a href="https://doi.org/10.1016/j.agrformet.2013.01.007" class="external-link uri">https://doi.org/10.1016/j.agrformet.2013.01.007</a></p></li>
+<li><p>Mkhabela et al. (2011). <em>Agricultural and Forest Meteorology</em>, 151(3), 385–393. <a href="https://doi.org/10.1016/j.agrformet.2010.11.012" class="external-link uri">https://doi.org/10.1016/j.agrformet.2010.11.012</a></p></li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section level2">

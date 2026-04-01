@@ -353,6 +353,51 @@ result$analysis_results        # Detailed analysis results
 result$metadata                # Processing metadata
 ```
 
+#### Crop Classification Methodology
+
+[`analyze_crop_vegetation()`](https://exelegch.github.io/geospatialsuite-docs/reference/analyze_crop_vegetation.md)
+classifies vegetation stress, growth stage, and yield potential using
+literature-informed thresholds across multiple indices:
+
+- **Stress detection** applies independent thresholds to each available
+  index (NDVI, EVI, GNDVI, SIPI). NDVI stress ranges (healthy ≥ 0.6,
+  moderate stress 0.4–0.6, severe stress \< 0.4) follow Tucker (1979)
+  and Hatfield et al. (2008). EVI and GNDVI thresholds are similarly
+  derived from Hatfield et al. (2008).
+
+- **Growth stage** is predicted from mean NDVI using crop-specific
+  cutoffs consistent with Anyamba et al. (2021), who applied explicit
+  per-crop NDVI thresholds for large-scale crop monitoring with MODIS
+  and crop mask data — the same conceptual approach used here. The
+  MODIS + CDL crop monitoring framework follows Akanbi et al. (2024).
+
+- **Yield potential** uses a composite score averaging up to five
+  normalized indices (NDVI, EVI, GNDVI, DVI, RVI), consistent with the
+  multi-index approach of Bolton & Friedl (2013) and Mkhabela et
+  al. (2011).
+
+> **Note:** Thresholds are literature-informed starting points. Exact
+> NDVI boundaries vary by region, cultivar, sensor, and season.
+> Calibration with local ground truth data is recommended.
+
+**References:** - Tucker (1979). *Remote Sensing of Environment*, 8(2),
+127–150. <https://doi.org/10.1016/0034-4257(79)90013-0>
+
+- Hatfield et al. (2008). *Agronomy Journal*, 100(S3), S-117–S-131.
+  <https://doi.org/10.2134/agronj2006.0370c>
+
+- Anyamba et al. (2021). *Remote Sensing*, 13(21), 4227.
+  <https://doi.org/10.3390/rs13214227>
+
+- Akanbi et al. (2024). *Journal of Geovisualization and Spatial
+  Analysis*, 8, 9 <https://doi.org/10.1007/s41651-023-00164-y>
+
+- Bolton & Friedl (2013). *Agricultural and Forest Meteorology*, 173,
+  74–84. <https://doi.org/10.1016/j.agrformet.2013.01.007>
+
+- Mkhabela et al. (2011). *Agricultural and Forest Meteorology*, 151(3),
+  385–393. <https://doi.org/10.1016/j.agrformet.2010.11.012>
+
 ## 🌟 What Makes geospatialsuite Special
 
 ### 1. **Auto-Geocoding Revolution**
