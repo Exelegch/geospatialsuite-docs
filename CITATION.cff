@@ -1,0 +1,66 @@
+cff-version: "1.2.0"
+title: "geospatialsuite: Comprehensive Geospatiotemporal Analysis and Multimodal Integration Toolkit for R"
+message: "If you use this software, please cite our article in the Journal of Open Source Software."
+type: software
+authors:
+  - family-names: Akanbi
+    given-names: Olatunde D.
+    orcid: "https://orcid.org/0000-0001-7719-2619"
+  - family-names: Mandayam
+    given-names: Vibha S,
+    orcid: "https://orcid.org/0009-0008-8628-9904"
+  - family-names: Wu
+    given-names: Yinghui
+    orcid: "https://orcid.org/0000-0003-3991-5155"
+  - family-names: Yarus
+    given-names: Jeffrey
+    orcid: "https://orcid.org/0000-0002-9331-9568"
+  - family-names: Barcelos
+    given-names: Erika I.
+    orcid: "https://orcid.org/0000-0002-9273-8488"
+  - family-names: French
+    given-names: Roger H.
+    orcid: "https://orcid.org/0000-0002-6162-0532"
+repository-code: "https://github.com/cwru-sdle/geospatialsuite/"
+url: "https://cran.r-project.org/web/packages/geospatialsuite/"
+license: MIT
+version: "0.2.0"
+date-released: "2026-04-03"
+keywords:
+  - R
+  - geospatial analysis
+  - remote sensing
+  - vegetation indices
+  - NDVI
+  - spatial interpolation
+  - terra
+  - sf
+  - agricultural research
+  - environmental monitoring
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Akanbi
+      given-names: Olatunde D.
+      orcid: "https://orcid.org/0000-0001-7719-2619"
+    - family-names: Mandayam
+      given-names: Vibha S.
+      orcid: "https://orcid.org/0009-0008-8628-9904"
+    - family-names: Wu
+      given-names: Yinghui
+      orcid: "https://orcid.org/0000-0003-3991-5155"
+    - family-names: Yarus
+      given-names: Jeffrey
+      orcid: "https://orcid.org/0000-0002-9331-9568"
+    - family-names: Barcelos
+      given-names: Erika I.
+      orcid: "https://orcid.org/0000-0002-9273-8488"
+    - family-names: French
+      given-names: Roger H.
+      orcid: "https://orcid.org/0000-0002-6162-0532"
+  journal: "Journal of Open Source Software"
+  publisher:
+    name: "Open Journals"
+  issn: "2475-9066"
+  title: "geospatialsuite: Comprehensive Geospatiotemporal Analysis and Multimodal Integration Toolkit for R"
+  year: 2026
