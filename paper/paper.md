@@ -23,7 +23,7 @@ authors:
   equal-contrib: true
   affiliation: '1'
   corresponding: true
-- name: Vibha Mandayam
+- name: Vibha S. Mandayam
   orcid: "0009-0008-8628-9904"
   equal-contrib: true
   affiliation: '1'
