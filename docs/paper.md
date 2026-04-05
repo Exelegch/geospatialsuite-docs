@@ -13,9 +13,9 @@ tags:
 - environmental monitoring
 date: "28 December 2025"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 bibliography: paper.bib
 authors:
 - name: Olatunde D. Akanbi
@@ -23,7 +23,7 @@ authors:
   equal-contrib: true
   affiliation: '1'
   corresponding: true
-- name: Vibha Mandayam
+- name: Vibha S. Mandayam
   orcid: "0009-0008-8628-9904"
   equal-contrib: true
   affiliation: '1'
