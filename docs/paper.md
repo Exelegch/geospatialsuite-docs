@@ -101,6 +101,6 @@ geospatialsuite is available on the Comprehensive R Archive Network (CRAN) at ht
 
 # Acknowledgements
 
-This material is based upon financial support by the National Science Foundation, EEC Division of Engineering Education and Centers, NSF Engineering Research Center for Advancing Sustainable and Distributed Fertilizer production (CASFER), NSF 20-553 Gen-4 Engineering Research Centers award 2133576. The authors thank the broader Solar Durablity and Lifetime Extension (SDLE) research community for feedback and testing that improved the package's functionality and usability.
+This material is based upon financial support by the National Science Foundation, EEC Division of Engineering Education and Centers, NSF Engineering Research Center for Advancing Sustainable and Distributed Fertilizer production (CASFER), NSF 20-553 Gen-4 Engineering Research Centers award 2133576. The authors thank the broader Solar Durability and Lifetime Extension (SDLE) research community for feedback and testing that improved the package's functionality and usability.
 
 # References
