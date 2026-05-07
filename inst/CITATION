@@ -26,7 +26,8 @@ bibentry(
   bibtype  = "Article",
   title    = "geospatialsuite: Comprehensive Geospatiotemporal Analysis and Multimodal Integration Toolkit for R",
   author   = c(
-    person("Olatunde D.", "Akanbi", , "olatunde.akanbi@case.edu", role = c("aut", "cre", "cph"),
+    person("Olatunde D.", "Akanbi", , "olatunde.akanbi@case.edu",
+           role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-7719-2619")),
     person("Vibha", "Mandayam", role = "aut",
            comment = c(ORCID = "0009-0008-8628-9904")),
@@ -34,21 +35,22 @@ bibentry(
            comment = c(ORCID = "0000-0003-3991-5155")),
     person("Jeffrey", "Yarus", role = "aut",
            comment = c(ORCID = "0000-0002-9331-9568")),
-    person("Erika I.", "Barcelos", , "erika.barcelos@case.edu", role = c("aut", "cph"),
+    person("Erika I.", "Barcelos", , "erika.barcelos@case.edu",
+           role = c("aut", "cph"),
            comment = c(ORCID = "0000-0002-9273-8488")),
-    person("Roger H.", "French", , "roger.french@case.edu", role = c("aut", "cph"),
+    person("Roger H.", "French", , "roger.french@case.edu",
+           role = c("aut", "cph"),
            comment = c(ORCID = "0000-0002-6162-0532"))
   ),
-  doi = {10.21105/joss.09536},
-  url = {https://doi.org/10.21105/joss.09536},
-  year = {2026},
-  publisher = {The Open Journal},
-  volume = {11},
-  number = {121},
-  pages = {9536}
+  journal   = "Journal of Open Source Software",
+  year      = "2026",
+  volume    = "11",
+  number    = "121",
+  pages     = "9536",
+  doi       = "10.21105/joss.09536",
+  url       = "https://doi.org/10.21105/joss.09536",
+  publisher = "The Open Journal"
 )
-
-
 
 bibentry(
   bibtype  = "Article",

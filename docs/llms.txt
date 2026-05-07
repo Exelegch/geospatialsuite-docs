@@ -32,6 +32,7 @@ research, environmental monitoring, and remote sensing applications.
 
 ## 🔗 Quick Links
 
+- **JOSS Paper**: <https://joss.theoj.org/papers/10.21105/joss.09536>
 - **CRAN**: <https://cran.r-project.org/package=geospatialsuite>
 - **Documentation**: <https://exelegch.github.io/geospatialsuite-docs/>
 - **GitHub**: <https://github.com/cwru-sdle/geospatialsuite>
