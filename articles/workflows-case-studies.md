@@ -75,17 +75,17 @@ test_geospatialsuite_package_simple(verbose = TRUE)
     #> [1] 100
     #> 
     #> $summary$duration_seconds
-    #> [1] 0.32
+    #> [1] 0.3
     #> 
     #> $summary$version
     #> [1] "0.1.0"
     #> 
     #> 
     #> $test_output_dir
-    #> [1] "/tmp/RtmpTibYyl"
+    #> [1] "/tmp/Rtmp4Sa0rt"
     #> 
     #> $timestamp
-    #> [1] "2026-05-07 21:46:21 UTC"
+    #> [1] "2026-05-07 21:52:43 UTC"
     #> 
     #> $test_approach
     #> [1] "simplified_robust"
