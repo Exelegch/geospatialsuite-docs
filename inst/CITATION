@@ -39,11 +39,16 @@ bibentry(
     person("Roger H.", "French", , "roger.french@case.edu", role = c("aut", "cph"),
            comment = c(ORCID = "0000-0002-6162-0532"))
   ),
-  journal  = "Journal of Open Source Software",
-  year     = "2025",
-  note     = "Under review",
-  url      = "https://joss.theoj.org/papers/8147cac49f5caae89b8bd2b0d91c56fe"
+  doi = {10.21105/joss.09536},
+  url = {https://doi.org/10.21105/joss.09536},
+  year = {2026},
+  publisher = {The Open Journal},
+  volume = {11},
+  number = {121},
+  pages = {9536}
 )
+
+
 
 bibentry(
   bibtype  = "Article",
